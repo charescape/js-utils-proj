@@ -26,14 +26,23 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
       }
 
       console.log('Not isOk: ', resp);
-      console.log(JSON.parse(JSON.stringify(resp)));
       for (let name in resp) {
         if (resp.hasOwnProperty(name)) {
           // @ts-ignore
-          console.log(name, 'this is fog (' + name + ') for sure. Value: ', resp[name]);
+          console.log(name, 'YES(Not isOk) fog (' + name + ') for sure. Value: ', resp[name]);
         } else {
           // @ts-ignore
-          console.log(name, 'this is NOT fog (' + name + '). Value: ' + resp[name]);
+          console.log(name, 'NO(Not isOk) fog (' + name + '). Value: ', resp[name]);
+        }
+        // @ts-ignore
+        if (JsUtils.isPlainObject(resp[name])) {
+          // @ts-ignore
+          console.log('isPlainObject(Not isOk): ', JSON.stringify(resp[name]));
+        }
+        // @ts-ignore
+        if (JsUtils.isFunction(resp[name])) {
+          // @ts-ignore
+          console.log('isFunction(Not isOk): ', resp[name]());
         }
       }
 
@@ -44,24 +53,23 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
     // STATUS: NOT 2xx
     (error: Axios_T.AxiosError): false => {
       console.log('onRejected error: ', error);
-      console.log(JSON.parse(JSON.stringify(error)));
       for (let name in error) {
         if (error.hasOwnProperty(name)) {
           // @ts-ignore
-          console.log(name, 'YES fog (' + name + ') for sure. Value: ', error[name]);
+          console.log(name, 'YES(onRejected) fog (' + name + ') for sure. Value: ', error[name]);
         } else {
           // @ts-ignore
-          console.log(name, 'NO fog (' + name + '). Value: ', error[name]);
+          console.log(name, 'NO(onRejected) fog (' + name + '). Value: ', error[name]);
         }
         // @ts-ignore
         if (JsUtils.isPlainObject(error[name])) {
           // @ts-ignore
-          console.log('isPlainObject: ', JSON.stringify(error[name]));
+          console.log('isPlainObject(onRejected): ', JSON.stringify(error[name]));
         }
         // @ts-ignore
         if (JsUtils.isFunction(error[name])) {
           // @ts-ignore
-          console.log('isFunction: ', error[name]());
+          console.log('isFunction(onRejected): ', error[name]());
         }
       }
 
