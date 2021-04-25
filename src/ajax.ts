@@ -3,8 +3,8 @@ import type * as JsUtils_T from "@charescape/js-utils";
 
 declare const JsUtils: typeof JsUtils_T;
 
-export function ajaxCreate() {
-  const ajax = JsUtils.ajaxCreate();
+export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosInstance {
+  const ajax = JsUtils.ajaxCreate(config);
 
   ajax.interceptors.response.use(
     // STATUS: 2xx
@@ -41,6 +41,8 @@ export function ajaxCreate() {
       return false;
     }
   );
+
+  return ajax;
 }
 
 export function ajaxHandleError(resp?: Axios_T.AxiosResponse | Axios_T.AxiosError): void {
