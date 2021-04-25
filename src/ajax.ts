@@ -27,6 +27,15 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
 
       console.log('Not isOk: ', resp);
       console.log(JSON.parse(JSON.stringify(resp)));
+      for (let name in resp) {
+        if (resp.hasOwnProperty(name)) {
+          // @ts-ignore
+          console.log(name, 'this is fog (' + name + ') for sure. Value: ', resp[name]);
+        } else {
+          // @ts-ignore
+          console.log(name, 'this is NOT fog (' + name + '). Value: ' + resp[name]);
+        }
+      }
 
       ajaxHandleError(resp);
 
@@ -36,6 +45,15 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
     (error: Axios_T.AxiosError): false => {
       console.log('onRejected error: ', error);
       console.log(JSON.parse(JSON.stringify(error)));
+      for (let name in error) {
+        if (error.hasOwnProperty(name)) {
+          // @ts-ignore
+          console.log(name, 'this is fog (' + name + ') for sure. Value: ', error[name]);
+        } else {
+          // @ts-ignore
+          console.log(name, 'this is NOT fog (' + name + '). Value: ' + error[name]);
+        }
+      }
 
       ajaxHandleError(error);
 
