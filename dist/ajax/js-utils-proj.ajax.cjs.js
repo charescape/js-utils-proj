@@ -45,53 +45,11 @@ function ajaxCreate(config) {
             }
             return resp;
         }
-        console.log('Not isOk: ', resp);
-        for (var name_1 in resp) {
-            if (resp.hasOwnProperty(name_1)) {
-                // @ts-ignore
-                console.log(name_1, 'YES(Not isOk) fog (' + name_1 + ') for sure. Value: ', resp[name_1]);
-            }
-            else {
-                // @ts-ignore
-                console.log(name_1, 'NO(Not isOk) fog (' + name_1 + '). Value: ', resp[name_1]);
-            }
-            // @ts-ignore
-            if (JsUtils.isPlainObject(resp[name_1])) {
-                // @ts-ignore
-                console.log('isPlainObject(Not isOk): ', JSON.stringify(resp[name_1]));
-            }
-            // @ts-ignore
-            if (JsUtils.isFunction(resp[name_1])) {
-                // @ts-ignore
-                console.log('isFunction(Not isOk): ', resp[name_1]());
-            }
-        }
         ajaxHandleError(resp);
         return false;
     }, 
     // STATUS: NOT 2xx
     function (error) {
-        console.log('onRejected error: ', error);
-        for (var name_2 in error) {
-            if (error.hasOwnProperty(name_2)) {
-                // @ts-ignore
-                console.log(name_2, 'YES(onRejected) fog (' + name_2 + ') for sure. Value: ', error[name_2]);
-            }
-            else {
-                // @ts-ignore
-                console.log(name_2, 'NO(onRejected) fog (' + name_2 + '). Value: ', error[name_2]);
-            }
-            // @ts-ignore
-            if (JsUtils.isPlainObject(error[name_2])) {
-                // @ts-ignore
-                console.log('isPlainObject(onRejected): ', JSON.stringify(error[name_2]));
-            }
-            // @ts-ignore
-            if (JsUtils.isFunction(error[name_2])) {
-                // @ts-ignore
-                console.log('isFunction(onRejected): ', error[name_2]());
-            }
-        }
         ajaxHandleError(error);
         // return Promise.reject(error);
         return false;
@@ -99,25 +57,28 @@ function ajaxCreate(config) {
     return ajax;
 }
 function ajaxHandleError(resp) {
+    var _a;
     var err;
-    if (typeof resp === "undefined") {
-        return;
-    }
-    // @ts-ignore
-    var Resp_Message = resp.message;
-    // @ts-ignore
-    var Resp_Response = resp.response;
-    // Special Case 1: blocked by CORS
-    if (JsUtils.isString(Resp_Message)) {
-        JsUtils.swalAlert(Resp_Message);
-        return;
-    }
-    // Special Case 2: HTTP-STATUS !== 200
-    if (!JsUtils.isNil(resp.config) && JsUtils.isObject(Resp_Response)) {
-        resp = Resp_Response;
+    if (resp instanceof Error) {
+        // Error Case 1: blocked by CORS
+        if (JsUtils.isNil(resp.response)) {
+            JsUtils.swalAlert({
+                text: "\u7F51\u7EDC\u7E41\u5FD9\uFF08400001\uFF09\uFF0C\u8BF7\u7A0D\u540E\u518D\u8BD5",
+                confirmButtonText: 'Close',
+            });
+            return;
+        }
+        // Error Case 2: HTTP_STATUS !== 200
+        if (JsUtils.isObject(resp.response) && !JsUtils.isNil((_a = resp.response) === null || _a === void 0 ? void 0 : _a.data)) {
+            // @ts-ignore
+            resp = resp.response;
+        }
     }
     var _respData = __assign({}, resp).data;
-    err = JsUtils.isStringFilled(_respData.err) ? _respData.err : '网络繁忙（400400），请稍后再试';
+    err = '网络繁忙（400000），请稍后再试';
+    if ((typeof _respData.err === "string") && JsUtils.isStringFilled(_respData.err)) {
+        err = _respData.err;
+    }
     if (_respData.retCode >= 500) {
         err = '网络繁忙（400500），请稍后再试';
     }
@@ -193,9 +154,8 @@ function ajaxHandleError(resp) {
             }
         }
     }
-    err = JsUtils.isNil(err) ? '网络繁忙（400000），请稍后再试' : err;
     JsUtils.swalAlert({
-        html: "<p>" + err + "</p>",
+        text: err,
         confirmButtonText: '关 闭',
     });
 }
