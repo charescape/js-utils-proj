@@ -48,10 +48,20 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
       for (let name in error) {
         if (error.hasOwnProperty(name)) {
           // @ts-ignore
-          console.log(name, 'this is fog (' + name + ') for sure. Value: ', error[name]);
+          console.log(name, 'YES fog (' + name + ') for sure. Value: ', error[name]);
         } else {
           // @ts-ignore
-          console.log(name, 'this is NOT fog (' + name + '). Value: ' + error[name]);
+          console.log(name, 'NO fog (' + name + '). Value: ', error[name]);
+        }
+        // @ts-ignore
+        if (JsUtils.isPlainObject(error[name])) {
+          // @ts-ignore
+          console.log('isPlainObject: ', JSON.stringify(error[name]));
+        }
+        // @ts-ignore
+        if (JsUtils.isFunction(error[name])) {
+          // @ts-ignore
+          console.log('isFunction: ', error[name]());
         }
       }
 
@@ -79,7 +89,7 @@ export function ajaxHandleError(resp?: Axios_T.AxiosResponse | Axios_T.AxiosErro
   const Resp_Response: any = resp.response;
 
   // Special Case 1: blocked by CORS
-  if (JsUtils.isNil(resp.config) && JsUtils.isString(Resp_Message)) {
+  if (JsUtils.isString(Resp_Message)) {
     JsUtils.swalAlert(Resp_Message);
     return;
   }

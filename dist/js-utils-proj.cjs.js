@@ -67,11 +67,21 @@ function ajaxCreate(config) {
         for (var name_2 in error) {
             if (error.hasOwnProperty(name_2)) {
                 // @ts-ignore
-                console.log(name_2, 'this is fog (' + name_2 + ') for sure. Value: ', error[name_2]);
+                console.log(name_2, 'YES fog (' + name_2 + ') for sure. Value: ', error[name_2]);
             }
             else {
                 // @ts-ignore
-                console.log(name_2, 'this is NOT fog (' + name_2 + '). Value: ' + error[name_2]);
+                console.log(name_2, 'NO fog (' + name_2 + '). Value: ', error[name_2]);
+            }
+            // @ts-ignore
+            if (JsUtils.isPlainObject(error[name_2])) {
+                // @ts-ignore
+                console.log('isPlainObject: ', JSON.stringify(error[name_2]));
+            }
+            // @ts-ignore
+            if (JsUtils.isFunction(error[name_2])) {
+                // @ts-ignore
+                console.log('isFunction: ', error[name_2]());
             }
         }
         ajaxHandleError(error);
@@ -90,7 +100,7 @@ function ajaxHandleError(resp) {
     // @ts-ignore
     var Resp_Response = resp.response;
     // Special Case 1: blocked by CORS
-    if (JsUtils.isNil(resp.config) && JsUtils.isString(Resp_Message)) {
+    if (JsUtils.isString(Resp_Message)) {
         JsUtils.swalAlert(Resp_Message);
         return;
     }
