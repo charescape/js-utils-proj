@@ -25,53 +25,12 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
         return resp;
       }
 
-      console.log('Not isOk: ', resp);
-      for (let name in resp) {
-        if (resp.hasOwnProperty(name)) {
-          // @ts-ignore
-          console.log(name, 'YES(Not isOk) fog (' + name + ') for sure. Value: ', resp[name]);
-        } else {
-          // @ts-ignore
-          console.log(name, 'NO(Not isOk) fog (' + name + '). Value: ', resp[name]);
-        }
-        // @ts-ignore
-        if (JsUtils.isPlainObject(resp[name])) {
-          // @ts-ignore
-          console.log('isPlainObject(Not isOk): ', JSON.stringify(resp[name]));
-        }
-        // @ts-ignore
-        if (JsUtils.isFunction(resp[name])) {
-          // @ts-ignore
-          console.log('isFunction(Not isOk): ', resp[name]());
-        }
-      }
-
       ajaxHandleError(resp);
 
       return false;
     },
     // STATUS: NOT 2xx
     (error: Axios_T.AxiosError): false => {
-      console.log('onRejected error: ', error);
-      for (let name in error) {
-        if (error.hasOwnProperty(name)) {
-          // @ts-ignore
-          console.log(name, 'YES(onRejected) fog (' + name + ') for sure. Value: ', error[name]);
-        } else {
-          // @ts-ignore
-          console.log(name, 'NO(onRejected) fog (' + name + '). Value: ', error[name]);
-        }
-        // @ts-ignore
-        if (JsUtils.isPlainObject(error[name])) {
-          // @ts-ignore
-          console.log('isPlainObject(onRejected): ', JSON.stringify(error[name]));
-        }
-        // @ts-ignore
-        if (JsUtils.isFunction(error[name])) {
-          // @ts-ignore
-          console.log('isFunction(onRejected): ', error[name]());
-        }
-      }
 
       ajaxHandleError(error);
 
@@ -84,33 +43,32 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
   return ajax;
 }
 
-export function ajaxHandleError(resp?: Axios_T.AxiosResponse | Axios_T.AxiosError): void {
-  let err: string | undefined;
+export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError): void {
+  let err: string;
 
-  if (typeof resp === "undefined") {
-    return;
+  if (resp instanceof Error) {
+    // Special Case 1: blocked by CORS
+    if (JsUtils.isNil(resp.response)) {
+      JsUtils.swalAlert({
+        text: `网络繁忙（400001），请稍后再试`,
+        confirmButtonText: 'Close',
+      });
+      return;
+    }
+
+    // Special Case 2: HTTP-STATUS !== 200
+    if (JsUtils.isObject(resp.response) && !JsUtils.isNil(resp.response?.data)) {
+      // @ts-ignore
+      resp = resp.response;
+    }
   }
-
-  // @ts-ignore
-  const Resp_Message: any = resp.message;
-  // @ts-ignore
-  const Resp_Response: any = resp.response;
-
-  // Special Case 1: blocked by CORS
-  if (JsUtils.isString(Resp_Message)) {
-    JsUtils.swalAlert(Resp_Message);
-    return;
-  }
-
-  // Special Case 2: HTTP-STATUS !== 200
-  if (!JsUtils.isNil(resp.config) && JsUtils.isObject(Resp_Response)) {
-    resp = Resp_Response;
-  }
-
 
   const _respData: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
 
-  err = JsUtils.isStringFilled(_respData.err) ? _respData.err : '网络繁忙（400400），请稍后再试';
+  err = '网络繁忙（400400），请稍后再试';
+  if ((typeof _respData.err === "string") && JsUtils.isStringFilled(_respData.err)) {
+    err = _respData.err;
+  }
 
   if (_respData.retCode >= 500) {
     err = '网络繁忙（400500），请稍后再试';
@@ -183,7 +141,7 @@ export function ajaxHandleError(resp?: Axios_T.AxiosResponse | Axios_T.AxiosErro
   err = JsUtils.isNil(err) ? '网络繁忙（400000），请稍后再试' : err;
 
   JsUtils.swalAlert({
-    html: `<p>${err}</p>`,
+    text: err,
     confirmButtonText: '关 闭',
   });
 }
