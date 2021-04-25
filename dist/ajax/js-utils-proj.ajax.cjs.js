@@ -46,15 +46,24 @@ function ajaxCreate(config) {
             return resp;
         }
         console.log('Not isOk: ', resp);
-        console.log(JSON.parse(JSON.stringify(resp)));
         for (var name_1 in resp) {
             if (resp.hasOwnProperty(name_1)) {
                 // @ts-ignore
-                console.log(name_1, 'this is fog (' + name_1 + ') for sure. Value: ', resp[name_1]);
+                console.log(name_1, 'YES(Not isOk) fog (' + name_1 + ') for sure. Value: ', resp[name_1]);
             }
             else {
                 // @ts-ignore
-                console.log(name_1, 'this is NOT fog (' + name_1 + '). Value: ' + resp[name_1]);
+                console.log(name_1, 'NO(Not isOk) fog (' + name_1 + '). Value: ', resp[name_1]);
+            }
+            // @ts-ignore
+            if (JsUtils.isPlainObject(resp[name_1])) {
+                // @ts-ignore
+                console.log('isPlainObject(Not isOk): ', JSON.stringify(resp[name_1]));
+            }
+            // @ts-ignore
+            if (JsUtils.isFunction(resp[name_1])) {
+                // @ts-ignore
+                console.log('isFunction(Not isOk): ', resp[name_1]());
             }
         }
         ajaxHandleError(resp);
@@ -63,25 +72,24 @@ function ajaxCreate(config) {
     // STATUS: NOT 2xx
     function (error) {
         console.log('onRejected error: ', error);
-        console.log(JSON.parse(JSON.stringify(error)));
         for (var name_2 in error) {
             if (error.hasOwnProperty(name_2)) {
                 // @ts-ignore
-                console.log(name_2, 'YES fog (' + name_2 + ') for sure. Value: ', error[name_2]);
+                console.log(name_2, 'YES(onRejected) fog (' + name_2 + ') for sure. Value: ', error[name_2]);
             }
             else {
                 // @ts-ignore
-                console.log(name_2, 'NO fog (' + name_2 + '). Value: ', error[name_2]);
+                console.log(name_2, 'NO(onRejected) fog (' + name_2 + '). Value: ', error[name_2]);
             }
             // @ts-ignore
             if (JsUtils.isPlainObject(error[name_2])) {
                 // @ts-ignore
-                console.log('isPlainObject: ', JSON.stringify(error[name_2]));
+                console.log('isPlainObject(onRejected): ', JSON.stringify(error[name_2]));
             }
             // @ts-ignore
             if (JsUtils.isFunction(error[name_2])) {
                 // @ts-ignore
-                console.log('isFunction: ', error[name_2]());
+                console.log('isFunction(onRejected): ', error[name_2]());
             }
         }
         ajaxHandleError(error);
