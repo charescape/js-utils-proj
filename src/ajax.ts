@@ -47,7 +47,7 @@ export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError
   let err: string;
 
   if (resp instanceof Error) {
-    // Special Case 1: blocked by CORS
+    // Error Case 1: blocked by CORS
     if (JsUtils.isNil(resp.response)) {
       JsUtils.swalAlert({
         text: `网络繁忙（400001），请稍后再试`,
@@ -56,7 +56,7 @@ export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError
       return;
     }
 
-    // Special Case 2: HTTP-STATUS !== 200
+    // Error Case 2: HTTP_STATUS !== 200
     if (JsUtils.isObject(resp.response) && !JsUtils.isNil(resp.response?.data)) {
       // @ts-ignore
       resp = resp.response;
@@ -65,7 +65,7 @@ export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError
 
   const _respData: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
 
-  err = '网络繁忙（400400），请稍后再试';
+  err = '网络繁忙（400000），请稍后再试';
   if ((typeof _respData.err === "string") && JsUtils.isStringFilled(_respData.err)) {
     err = _respData.err;
   }
@@ -137,8 +137,6 @@ export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError
       }
     }
   }
-
-  err = JsUtils.isNil(err) ? '网络繁忙（400000），请稍后再试' : err;
 
   JsUtils.swalAlert({
     text: err,
