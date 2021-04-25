@@ -17,7 +17,7 @@ const pkgs = [];
 
   let outputName = `JsUtilsProj`;
   let outputFileDir = `dist`;
-  let outputFileName = `js-utils`;
+  let outputFileName = `js-utils-proj`;
 
   if (!isCombined) {
     outputName += `_${_upperFirst(_camelCase(pkg.name))}`;
