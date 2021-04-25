@@ -47,6 +47,16 @@ function ajaxCreate(config) {
         }
         console.log('Not isOk: ', resp);
         console.log(JSON.parse(JSON.stringify(resp)));
+        for (var name_1 in resp) {
+            if (resp.hasOwnProperty(name_1)) {
+                // @ts-ignore
+                console.log(name_1, 'this is fog (' + name_1 + ') for sure. Value: ', resp[name_1]);
+            }
+            else {
+                // @ts-ignore
+                console.log(name_1, 'this is NOT fog (' + name_1 + '). Value: ' + resp[name_1]);
+            }
+        }
         ajaxHandleError(resp);
         return false;
     }, 
@@ -54,6 +64,16 @@ function ajaxCreate(config) {
     function (error) {
         console.log('onRejected error: ', error);
         console.log(JSON.parse(JSON.stringify(error)));
+        for (var name_2 in error) {
+            if (error.hasOwnProperty(name_2)) {
+                // @ts-ignore
+                console.log(name_2, 'this is fog (' + name_2 + ') for sure. Value: ', error[name_2]);
+            }
+            else {
+                // @ts-ignore
+                console.log(name_2, 'this is NOT fog (' + name_2 + '). Value: ' + error[name_2]);
+            }
+        }
         ajaxHandleError(error);
         // return Promise.reject(error);
         return false;
