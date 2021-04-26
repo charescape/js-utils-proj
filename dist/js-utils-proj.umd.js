@@ -66,7 +66,7 @@
             if (JsUtils.isNil(resp.response)) {
                 JsUtils.swalAlert({
                     text: "\u7F51\u7EDC\u7E41\u5FD9\uFF08400001\uFF09\uFF0C\u8BF7\u7A0D\u540E\u518D\u8BD5",
-                    confirmButtonText: 'Close',
+                    confirmButtonText: '关 闭',
                 });
                 return;
             }
