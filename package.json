@@ -1,6 +1,6 @@
 {
   "name": "@charescape/js-utils-proj",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "keywords": [],
   "main": "dist/js-utils-proj.cjs.js",
