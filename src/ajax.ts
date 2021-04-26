@@ -51,7 +51,7 @@ export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError
     if (JsUtils.isNil(resp.response)) {
       JsUtils.swalAlert({
         text: `网络繁忙（400001），请稍后再试`,
-        confirmButtonText: 'Close',
+        confirmButtonText: '关 闭',
       });
       return;
     }
