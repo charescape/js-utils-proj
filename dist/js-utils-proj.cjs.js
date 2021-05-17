@@ -37,7 +37,7 @@ function ajaxCreate(config) {
         if (_respData.isOk) {
             if (JsUtils.isPlainObject(_respData.data)) {
                 // Override: resp.data
-                resp.data = _respData;
+                resp.data = _respData.data;
                 // toast success
                 if (JsUtils.isStringFilled(_respData.data.toast)) {
                     JsUtils.swalToastSuccess({ title: _respData.data.toast });
