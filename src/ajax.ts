@@ -14,7 +14,7 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
       if (_respData.isOk) {
         if (JsUtils.isPlainObject(_respData.data)) {
           // Override: resp.data
-          resp.data = _respData;
+          resp.data = _respData.data;
 
           // toast success
           if (JsUtils.isStringFilled(_respData.data.toast)) {
