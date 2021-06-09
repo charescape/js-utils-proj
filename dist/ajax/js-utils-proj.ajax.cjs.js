@@ -74,6 +74,7 @@ function ajaxHandleError(resp) {
             resp = resp.response;
         }
     }
+    // @ts-ignore
     var _respData = __assign({}, resp).data;
     err = '网络繁忙（400000），请稍后再试';
     if ((typeof _respData.err === "string") && JsUtils.isStringFilled(_respData.err)) {
