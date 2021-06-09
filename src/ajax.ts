@@ -63,6 +63,7 @@ export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError
     }
   }
 
+  // @ts-ignore
   const _respData: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
 
   err = '网络繁忙（400000），请稍后再试';
