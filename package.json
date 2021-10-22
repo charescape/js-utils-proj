@@ -1,6 +1,6 @@
 {
   "name": "@charescape/js-utils-proj",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "",
   "keywords": [],
   "main": "dist/js-utils-proj.cjs.js",
@@ -30,7 +30,7 @@
     "do-npm-publish": "npm publish . --access public -dd"
   },
   "dependencies": {
-    "@charescape/js-utils": "^1.2.0"
+    "@charescape/js-utils": "^1.4.0"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.2.1",
