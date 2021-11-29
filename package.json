@@ -32,7 +32,7 @@
   "dependencies": {
     "@charescape/js-utils": "^1.4.0",
     "axios": "<0.22.0",
-    "sweetalert2": "^10.16.6"
+    "sweetalert2": "^11.2.1"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.2.1",
