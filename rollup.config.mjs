@@ -30,22 +30,26 @@ const pkgs = [];
     output: [
       {
         name: outputName,
+        banner: `/*! ${outputName} ${(new Date()).toISOString()} */\n`,
         file: `${outputFileDir}/${outputFileName}.cjs.js`,
         format: 'cjs'
       },
       {
         name: outputName,
+        banner: `/*! ${outputName} ${(new Date()).toISOString()} */\n`,
         file: `${outputFileDir}/${outputFileName}.esm.js`,
         format: 'esm'
       },
 
       {
         name: outputName,
+        banner: `/*! ${outputName} ${(new Date()).toISOString()} */\n`,
         file: `${outputFileDir}/${outputFileName}.umd.js`,
         format: 'umd'
       },
       {
         name: outputName,
+        banner: `/*! ${outputName} ${(new Date()).toISOString()} */\n`,
         file: `${outputFileDir}/${outputFileName}.umd.min.js`,
         format: 'umd',
         plugins: [terser()]
