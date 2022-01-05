@@ -4,6 +4,7 @@
     "target": "ES5",
     "module": "ESNext",
     "moduleResolution": "Node",
+    "newLine": "lf",
     "declaration": true,
     "declarationDir": "./types",
     "sourceMap": false
