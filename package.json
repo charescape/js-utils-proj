@@ -30,7 +30,7 @@
     "do-npm-publish": "npm publish . --access public -dd"
   },
   "dependencies": {
-    "@charescape/js-utils": "^1.4.1",
+    "@charescape/js-utils": "^1.5.0",
     "axios": "^0.24.0",
     "sweetalert2": "^11.3.3"
   },
