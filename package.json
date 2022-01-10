@@ -38,7 +38,7 @@
     "@rollup/plugin-typescript": "^8.2.1",
     "@tsconfig/recommended": "^1.0.1",
     "@types/jest": "^27.0.3",
-    "@types/qs": "^6.9.6",
+    "@types/qs": "^6.9.7",
     "jest": "^27.4.3",
     "lodash-es": "^4.17.21",
     "rollup": "^2.60.2",
