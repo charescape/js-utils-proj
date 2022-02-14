@@ -1,4 +1,4 @@
-/*! JsUtilsProj_Ajax 2022-01-05T08:19:07.201Z */
+/*! JsUtilsProj_Ajax 2022-02-14T02:50:10.739Z */
 
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
