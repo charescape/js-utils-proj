@@ -1,6 +1,8 @@
 import type * as Axios_T from "axios";
+import type * as Cookies_T from "js-cookie";
 import type * as JsUtils_T from "@charescape/js-utils";
 
+declare const Cookies2: typeof Cookies_T;
 declare const JsUtils: typeof JsUtils_T;
 
 export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosInstance {
@@ -34,16 +36,36 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
       resp.headers = _normalized_headers;
 
       const _respData: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
-
       if (_respData.isOk) {
+        // override: resp.data
         if (JsUtils.isPlainObject(_respData.data)) {
-          // Override: resp.data
           resp.data = _respData.data;
+        }
 
-          // toast success
-          if (JsUtils.isStringFilled(resp.data.toast)) {
-            JsUtils.swalToastSuccess({title: resp.data.toast});
+        // resolve credential
+        let _cookieCredential = null;
+        let _cookieCredentialSeconds = null;
+
+        if (JsUtils.isStringFilled(resp.data.cookieCredential)) {
+          _cookieCredential = resp.data.cookieCredential;
+          _cookieCredentialSeconds = resp.data.cookieCredentialSeconds;
+        } else if (JsUtils.isStringFilled(resp.headers["x-cookie-credential"])) {
+          _cookieCredential = resp.headers["x-cookie-credential"];
+          _cookieCredentialSeconds = resp.headers["x-cookie-credential-seconds"];
+        }
+
+        // set cookie
+        if (JsUtils.isStringFilled(_cookieCredential)) {
+          if (JsUtils.isNumber(_cookieCredentialSeconds)) {
+            Cookies2.set('RequestCredential', _cookieCredential, {expires: _cookieCredentialSeconds/24*60*60, sameSite: "Lax"});
+          } else {
+            Cookies2.set('RequestCredential', _cookieCredential, {expires: 1, sameSite: "Lax"}); // 1天
           }
+        }
+
+        // quick toast
+        if (JsUtils.isStringFilled(resp.data.toast)) {
+          JsUtils.swalToastSuccess({title: resp.data.toast});
         }
 
         return resp;
