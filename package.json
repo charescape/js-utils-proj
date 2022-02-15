@@ -38,6 +38,7 @@
     "@rollup/plugin-typescript": "^8.2",
     "@tsconfig/recommended": "^1.0",
     "@types/jest": "^27.0",
+    "@types/js-cookie": "^3.0.1",
     "@types/qs": "^6.9",
     "jest": "^27.4",
     "lodash-es": "^4.17",
