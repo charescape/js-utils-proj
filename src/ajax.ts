@@ -33,12 +33,12 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
       // override: resp.headers
       resp.headers = _normalized_headers;
 
-      const _resp_data: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
+      const _respData: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
 
-      if (_resp_data.isOk) {
-        if (JsUtils.isPlainObject(_resp_data.data)) {
+      if (_respData.isOk) {
+        if (JsUtils.isPlainObject(_respData.data)) {
           // Override: resp.data
-          resp.data = _resp_data.data;
+          resp.data = _respData.data;
 
           // toast success
           if (JsUtils.isStringFilled(resp.data.toast)) {
@@ -88,25 +88,25 @@ export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError
   }
 
   // @ts-ignore
-  const _resp_data: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
+  const _respData: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
 
   err = '网络繁忙（400000），请稍后再试';
-  if ((typeof _resp_data.err === "string") && JsUtils.isStringFilled(_resp_data.err)) {
-    err = _resp_data.err;
+  if ((typeof _respData.err === "string") && JsUtils.isStringFilled(_respData.err)) {
+    err = _respData.err;
   }
 
-  if (_resp_data.retCode >= 500) {
+  if (_respData.retCode >= 500) {
     err = '网络繁忙（400500），请稍后再试';
-  } else if (_resp_data.retCode === 401) {
+  } else if (_respData.retCode === 401) {
     err = `网络繁忙（400401），请稍后再试`;
-  } else if (_resp_data.retCode === 403) {
+  } else if (_respData.retCode === 403) {
     err = '网络繁忙（400403），请稍后再试';
-  } else if (_resp_data.retCode === 404) {
+  } else if (_respData.retCode === 404) {
     err = '网络繁忙（400404），请稍后再试';
-  } else if (_resp_data.retCode >= 400) {
-    if (JsUtils.isArray(_resp_data.data)) {
-      if (JsUtils.isObject(_resp_data.data[0])) {
-        if (JsUtils.isStringFilled(_resp_data.data[0].message)) {
+  } else if (_respData.retCode >= 400) {
+    if (JsUtils.isArray(_respData.data)) {
+      if (JsUtils.isObject(_respData.data[0])) {
+        if (JsUtils.isStringFilled(_respData.data[0].message)) {
           // {
           //   retCode: 4xx,
           //   data: [
@@ -114,20 +114,20 @@ export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError
           //     ...
           //   ]
           // }
-          err = _resp_data.data[0].message;
+          err = _respData.data[0].message;
         }
       }
-    } else if (JsUtils.isObject(_resp_data.data)) {
-      if (JsUtils.isStringFilled(_resp_data.data.err)) {
+    } else if (JsUtils.isObject(_respData.data)) {
+      if (JsUtils.isStringFilled(_respData.data.err)) {
         // {
         //   retCode: 4xx,
         //   data: {
         //     err: "An error occurred!"
         //   }
         // }
-        err = _resp_data.data.err;
-      } else if (JsUtils.isObject(_resp_data.data.err)) {
-        const errors: any[] = Object.values(_resp_data.data.err);
+        err = _respData.data.err;
+      } else if (JsUtils.isObject(_respData.data.err)) {
+        const errors: any[] = Object.values(_respData.data.err);
         if (JsUtils.isStringFilled(errors[0])) {
           // {
           //   retCode: 4xx,
@@ -151,14 +151,14 @@ export function ajaxHandleError(resp: Axios_T.AxiosResponse | Axios_T.AxiosError
             err = errors[0][0];
           }
         }
-      } else if (JsUtils.isStringFilled(_resp_data.data.message)) {
+      } else if (JsUtils.isStringFilled(_respData.data.message)) {
         // {
         //   retCode: 4xx,
         //   data: {
         //     message: "An error occurred!"
         //   }
         // }
-        err = _resp_data.data.message;
+        err = _respData.data.message;
       }
     }
   }
