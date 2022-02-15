@@ -13,6 +13,26 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
         return resp;
       }
 
+      // normalize headers
+      const _resp_headers = {...resp.headers};
+      const _normalized_headers = {};
+
+      Object.keys(_resp_headers).forEach((k: string) => {
+        let name: string = k.toLowerCase();
+        let value: any = _resp_headers[k];
+
+        // for special headers
+        if (name.indexOf('x-pagination-') === 0) {
+          value *= 1;
+        }
+
+        // @ts-ignore
+        _normalized_headers[name] = value;
+      });
+
+      // override: resp.headers
+      resp.headers = _normalized_headers;
+
       const _respData: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
 
       if (_respData.isOk) {
@@ -21,8 +41,8 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
           resp.data = _respData.data;
 
           // toast success
-          if (JsUtils.isStringFilled(_respData.data.toast)) {
-            JsUtils.swalToastSuccess({title: _respData.data.toast});
+          if (JsUtils.isStringFilled(resp.data.toast)) {
+            JsUtils.swalToastSuccess({title: resp.data.toast});
           }
         }
 
