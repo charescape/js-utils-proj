@@ -9,6 +9,10 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
   ajax.interceptors.response.use(
     // STATUS: 2xx
     (resp: Axios_T.AxiosResponse): any => {
+      if (resp.config.responseType === 'blob') {
+        return resp;
+      }
+
       const _respData: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
 
       if (_respData.isOk) {
