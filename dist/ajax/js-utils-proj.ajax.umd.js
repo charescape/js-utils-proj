@@ -1,4 +1,4 @@
-/*! JsUtilsProj_Ajax 2022-01-05T08:19:07.201Z */
+/*! JsUtilsProj_Ajax 2022-05-03T13:33:10.007Z */
 
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -6,7 +6,7 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.JsUtilsProj_Ajax = {}));
 })(this, (function (exports) { 'use strict';
 
-    /*! *****************************************************************************
+    /******************************************************************************
     Copyright (c) Microsoft Corporation.
 
     Permission to use, copy, modify, and/or distribute this software for any
@@ -39,6 +39,7 @@
         function (resp) {
             var _respData = __assign({}, resp).data;
             if (_respData.isOk) {
+                console.log('JsUtils.isPlainObject(_respData.data)', JsUtils.isPlainObject(_respData.data));
                 if (JsUtils.isPlainObject(_respData.data)) {
                     // Override: resp.data
                     resp.data = _respData.data;

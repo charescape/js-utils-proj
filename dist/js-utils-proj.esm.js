@@ -1,6 +1,6 @@
-/*! JsUtilsProj 2022-01-05T08:19:07.156Z */
+/*! JsUtilsProj 2022-05-03T13:33:09.988Z */
 
-/*! *****************************************************************************
+/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -33,6 +33,7 @@ function ajaxCreate(config) {
     function (resp) {
         var _respData = __assign({}, resp).data;
         if (_respData.isOk) {
+            console.log('JsUtils.isPlainObject(_respData.data)', JsUtils.isPlainObject(_respData.data));
             if (JsUtils.isPlainObject(_respData.data)) {
                 // Override: resp.data
                 resp.data = _respData.data;
