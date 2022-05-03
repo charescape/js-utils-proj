@@ -12,6 +12,7 @@ export function ajaxCreate(config?: Axios_T.AxiosRequestConfig): Axios_T.AxiosIn
       const _respData: {isOk: boolean, retCode: number, data?: any, err?: string} = {...resp}.data;
 
       if (_respData.isOk) {
+        console.log('JsUtils.isPlainObject(_respData.data)', JsUtils.isPlainObject(_respData.data));
         if (JsUtils.isPlainObject(_respData.data)) {
           // Override: resp.data
           resp.data = _respData.data;
