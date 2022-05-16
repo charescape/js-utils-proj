@@ -42,7 +42,7 @@
     "@types/qs": "^6.9",
     "jest": "^27.4",
     "lodash-es": "^4.17",
-    "rollup": "^2.60",
+    "rollup": "^2.73",
     "rollup-plugin-terser": "^7.0",
     "tslib": "^2.2",
     "typescript": "^4.5"
